@@ -1635,7 +1635,7 @@ def view(request):
         else:
             username=request.session['trio_User']
             return render(request, 'view.html',{'username':username})
-    else:
+   else:
         if request.method == 'POST':
             if request.POST.get('more'):
                 ad_id=request.POST.get('ad_id')
@@ -1643,6 +1643,11 @@ def view(request):
                 ads = Ad.objects.filter(id=ad_id).prefetch_related('adimages_set').all()
                 related = Ad.objects.filter(category=ad_categ).prefetch_related('adimages_set').all().exclude(id=ad_id)
                 return render(request, 'detail_view.html',{'ads':ads,'related':related})
+            elif request.POST.get('chat'):
+                ad_id=request.POST.get('ad_id')
+                ad=Ad.objects.filter(id=ad_id).all()
+                chats = AdMessage.objects.filter(adId=ad_id).all()
+                return render(request, 'chats.html', {'chats':chats, 'ad_id':ad_id, 'ad':ad})
         return render(request, 'view.html')
 
 def details(request):
