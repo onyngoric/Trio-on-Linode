@@ -1635,7 +1635,7 @@ def view(request):
         else:
             username=request.session['trio_User']
             return render(request, 'view.html',{'username':username})
-   else:
+    else:
         if request.method == 'POST':
             if request.POST.get('more'):
                 ad_id=request.POST.get('ad_id')
